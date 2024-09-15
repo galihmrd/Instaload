@@ -14,10 +14,9 @@ jobs:
       - name: Setup Android SDK Tools
         uses: android-actions/setup-android@v2
       - name: Build
-        uses: gradle/gradle-build-action@v2
+        uses: gradle/actions/setup-gradle@v4
         with:
-          arguments: assembleRelease
-          gradle-version: 7.3.3
+          gradle-version: "8.10"
 
       - name: Collect Apk
         run: |
