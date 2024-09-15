@@ -29,8 +29,3 @@ jobs:
           mkdir apks
           find -name "*.apk" -exec cp {} apks \;
           ls apks/
-      - name: Upload Apps
-        uses: actions/upload-artifact@v2
-        with:
-          name: instaloader-${{ github.run_number }}
-          path: apks/*
