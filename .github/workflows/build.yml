@@ -17,7 +17,11 @@ jobs:
         uses: gradle/actions/setup-gradle@v4
         with:
           gradle-version: "8.10"
+      - name: Build Release apk
+        run: ./gradlew assembleRelease --stacktrace
 
+      - name: Build Release bundle
+        run: ./gradlew bundleRelease --stacktrace
       - name: Collect Apk
         run: |
           mkdir apks
