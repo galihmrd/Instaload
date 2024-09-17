@@ -1,4 +1,4 @@
-package com.alphacorp.instaloader
+package com.seodalmi.tikmedia
 
 import android.Manifest.permission.*
 import android.annotation.SuppressLint
@@ -52,8 +52,6 @@ class MainActivity : AppCompatActivity() {
 
         val py = Python.getInstance()
         val module = py.getModule("script")
-        val downloader = module["download"]
-        val posts =  module["post_count"]
         val linkDownloader = module["download_post_from_link"]
 
 
