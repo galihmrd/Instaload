@@ -1,3 +1,4 @@
+import os
 import requests
 import secrets
 
@@ -5,6 +6,8 @@ def download_post_from_link(url):
     api = f"https://galihmrd.my.id/api?url={url}"
     req = requests.get(api).json()
     download_url = req.get("data")["url"]
+    if not os.path.exists("/sdcard/TikMedia"):
+        os.makedirs("/sdcard/TikMedia")
     if len(download_url) > 1:
         for dl_url in download_url:
             random_hash = str(secrets.token_hex(nbytes=16))
