@@ -24,7 +24,7 @@ android {
             buildPython "python3"
             pip {
                 // A requirement specifier, with or without a version number:
-                install "instaloader"
+                install "requests"
             }
         }
     }

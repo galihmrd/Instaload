@@ -66,20 +66,12 @@ class MainActivity : AppCompatActivity() {
             if (Box.text.toString() != "") {
                 Toast.makeText(this, "Download Started", Toast.LENGTH_LONG).show()
 
-                if (Box.text.toString().startsWith("https://www.instagram.com/")) { // checks if the text is a valid instagram link
-                    // Post shortcode is a part of the Post URL, https://www.instagram.com/p/SHORTCODE/
-                    val url = Box.text.toString()
-                    var postShortcode = ""
-                    if(url.startsWith("https://www.instagram.com/p/")){
-                        postShortcode = url.substringAfter("https://www.instagram.com/p/").substringBefore("/")
-                    }
-                    else if(url.startsWith("https://www.instagram.com/reel/")){
-                        postShortcode = url.substringAfter("https://www.instagram.com/reel/").substringBefore("/")
-                    }
+                if (Box.text.toString().startsWith("https://")) { // checks if the text is a valid instagram link
+                    // Post shortcode is a part of the Post URL
 
                     CoroutineScope(Dispatchers.IO).launch {
                         try {
-                            linkDownloader?.call(postShortcode)
+                            linkDownloader?.call(Box.text.toString())
                             runOnUiThread {
                                 Toast.makeText(
                                     this@MainActivity,
@@ -98,43 +90,6 @@ class MainActivity : AppCompatActivity() {
                                 val show_error = findViewById<TextView>(R.id.StatusText)
                                 val error_name = error.toString().split(":")
                                 show_error.text = error_name.toString()
-                            }
-                        }
-                    }
-                }
-                else { // if the text is not a link, it must be an instagram username
-                    try {
-                        dl_status.text =
-                            "Found ${posts?.call(Box.text.toString())} posts, Downloading..."
-                    } catch (error: Throwable) {
-                        Toast.makeText(this@MainActivity, "Something went wrong", Toast.LENGTH_LONG)
-                            .show()
-                        val show_error = findViewById<TextView>(R.id.StatusText)
-                        val error_name = error.toString().split(":")
-                        show_error.text = error_name[error_name.size - 1]
-                    }
-
-                    CoroutineScope(Dispatchers.IO).launch {
-                        try {
-                            downloader?.call(Box.text.toString())
-                            runOnUiThread {
-                                Toast.makeText(
-                                    this@MainActivity,
-                                    "Download Finished",
-                                    Toast.LENGTH_LONG
-                                ).show()
-                                dl_status.text = "Download Status: Finished"
-                            }
-                        } catch (error: Throwable) {
-                            runOnUiThread {
-                                Toast.makeText(
-                                    this@MainActivity,
-                                    "Something went wrong",
-                                    Toast.LENGTH_LONG
-                                ).show()
-                                val show_error = findViewById<TextView>(R.id.StatusText)
-                                val error_name = error.toString().split(":")
-                                show_error.text = error_name[error_name.size - 1]
                             }
                         }
                     }

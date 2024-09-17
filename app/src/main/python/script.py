@@ -1,30 +1,22 @@
-import instaloader
+import requests
+import secrets
 
-
-def download(profile):
-    profile = profile.strip()
-    user = instaloader.Instaloader()
-    user.save_metadata = False
-    user.post_metadata_txt_pattern = ""
-    user.dirname_pattern = f"/sdcard/InstaLoaderApp/{profile}"
-    user.download_profile(profile)
-
-
-def post_count(username):
-    username = username.replace(" ", "")
-    L = instaloader.Instaloader()
-    profile = instaloader.Profile.from_username(L.context, username)
-
-    posts = profile.get_posts()
-
-    return posts.count
-
-# for reference: https://github.com/instaloader/instaloader/issues/1851
-def download_post_from_link(shortcode):
-    L = instaloader.Instaloader()
-    L.save_metadata = False
-    L.download_video_thumbnails=False
-    L.post_metadata_txt_pattern = ""
-    L.dirname_pattern = f"/sdcard/InstaLoaderApp/posts"
-    post = instaloader.Post.from_shortcode(L.context, shortcode)
-    L.download_post(post, target = "")
+def download_post_from_link(url):
+    api = f"https://galihmrd.my.id/api?url={url}"
+    req = requests.get(api).json()
+    download_url = req.get("data")["url"]
+    if len(download_url) > 1:
+        for dl_url in download_url:
+            random_hash = str(secrets.token_hex(nbytes=16))
+            get_content = requests.get(dl_url)
+            mime = get_content.headers.get("Content-Type")
+            ext = mime.split("/")[0]
+            with open("/sdcard/TikMedia/{random_hash}.{ext}", "wb") as file:
+                file.write(get_content.content)
+    else:
+        random_hash = str(secrets.token_hex(nbytes=16))
+        get_content = requests.get(download_url[0])
+        mime = get_content.headers.get("Content-Type")
+        ext = mime.split("/")[0]
+        with open("/sdcard/TikMedia/{random_hash}.{ext}", "wb") as file:
+            file.write(get_content.content)
