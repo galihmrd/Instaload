@@ -1,4 +1,4 @@
-package com.alphacorp.instaloader
+package com.seodalmi.tikmedia
 
 import org.junit.Test
 
