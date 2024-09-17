@@ -5,15 +5,15 @@ plugins {
 }
 
 android {
-    namespace 'com.alphacorp.instaloader'
+    namespace 'com.seodalmi.tikmedia'
     compileSdk 33
 
     defaultConfig {
-        applicationId "com.alphacorp.instaloader"
+        applicationId "com.seodalmi.tikmedia"
         minSdk 21
         targetSdk 33
         versionCode 1
-        versionName "1.4.1"
+        versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         ndk {
